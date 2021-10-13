@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <script src="https://cdn.socket.io/4.2.0/socket.io.min.js" integrity="sha384-PiBR5S00EtOj2Lto9Uu81cmoyZqR57XcOna1oAuVuIEjzj0wpqDVfD0JA9eXlRsj" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <title>Tic Tac Toe | by k04an</title>
+    <link rel="stylesheet" href="/styles">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="window" id="home-window" style="display: none;">
+             <div style="display: flex; width: 100%; height: 100%; flex-direction: column">
+                <div class="home-header">
+                    <p><span>Крестики</span><span>Нолики</span></p>
+                </div>
+                <div class="home-body">
+                    <div class="row">
+                        <h2>Lorem ipsum dolor sit amet.</h2>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, placeat odio accusantium vero rem corrupti reiciendis, voluptatum quisquam quos modi natus dolores consectetur, beatae dolorem.</p>
+                    </div>
+                    <div class="row" style="justify-content: center; align-items: center;">
+                        <div class="home-btn btnCreateRoom" style="text-align: center; background-color: #EE4747;">Создать игру</div>
+                    </div>
+                    <div class="row">
+                        <h2>Lorem ipsum dolor sit amet.</h2>
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel harum dolore autem repellat!</p>
+                    </div>
+                    <div class="row" style="justify-content: center; align-items: center;">
+                        <input type="text" class="roomIDInput" placeholder="ID комнаты">
+                        <div class="home-btn btnJoinRoom" style="text-align: center; background-color: #2B8F8F;">Присоединиться к игре</div>
+                    </div>
+                </div>
+                <div class="home-footer">Тут будут сылочки</div>
+             </div>
+        </div>
+
+        <div class="window" id="game-field" style="display: none;">
+            <div style="position: relative; width: 100%; height: 100%;">
+                <div class="field-menu">
+                    <div class="cross-score">
+                        <svg style="margin-right: 20px;" height="35px" width="35px" viewBox="0 0 324 324" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="291.5" cy="32.5" r="32.5" fill="#303030"/>
+                            <circle cx="32.5" cy="291.5" r="32.5" fill="#303030"/>
+                            <line x1="34.019" y1="290.019" x2="293.019" y2="31.019" stroke="#303030" stroke-width="65"/>
+                            <circle cx="32.5" cy="32.5" r="32.5" transform="rotate(-90 32.5 32.5)" fill="#303030"/>
+                            <circle cx="291.5" cy="291.5" r="32.5" transform="rotate(-90 291.5 291.5)" fill="#303030"/>
+                            <line x1="290.019" y1="289.981" x2="31.019" y2="30.981" stroke="#303030" stroke-width="65"/>
+                        </svg>
+                        <span>0</span>                  
+                    </div>
+    
+                    <div class="toLobbyBtn">
+                        <div>Назад в лобби</div>
+                    </div>
+    
+                    <div class="nought-score">
+                        <span>0</span>   
+                        <svg style="margin-left: 20px;" width="35px" height="35px" viewBox="0 0 324 324" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="162" cy="162" r="139.5" stroke="#303030" stroke-width="45"/>
+                        </svg>                   
+                    </div>
+                </div>
+    
+                <div class="field-body">
+                    
+                    <table class="field">
+                        <tbody>
+                            <tr><td style="border-bottom: 10px solid #303030; border-right: 10px solid #303030;"></td><td></td><td style="border-bottom: 10px solid #303030; border-left: 10px solid #303030;"></td></tr>
+                            <tr><td></td><td style="border: 10px solid #303030"></td><td></td></tr>
+                            <tr><td style="border-top: 10px solid #303030; border-right: 10px solid #303030;"></td><td></td><td style="border-top: 10px solid #303030; border-left: 10px solid #303030;"></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="field-log">Тут будет информация о ходе игры</div>
+    
+                <div class="slide">
+                    <svg style="cursor: pointer; margin: 70px; color: #303030" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="redo-alt" class="svg-inline--fa fa-redo-alt fa-w-16 restartBtn" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256.455 8c66.269.119 126.437 26.233 170.859 68.685l35.715-35.715C478.149 25.851 504 36.559 504 57.941V192c0 13.255-10.745 24-24 24H345.941c-21.382 0-32.09-25.851-16.971-40.971l41.75-41.75c-30.864-28.899-70.801-44.907-113.23-45.273-92.398-.798-170.283 73.977-169.484 169.442C88.764 348.009 162.184 424 256 424c41.127 0 79.997-14.678 110.629-41.556 4.743-4.161 11.906-3.908 16.368.553l39.662 39.662c4.872 4.872 4.631 12.815-.482 17.433C378.202 479.813 319.926 504 256 504 119.034 504 8.001 392.967 8 256.002 7.999 119.193 119.646 7.755 256.455 8z"></path></svg>
+                </div>
+            </div>
+        </div>
+    </div>       
+
+    <svg style="animation: bottom-wave-appear 4s ease-in-out 0.5s 1 forwards normal" id="bottom-wave" viewBox="0 0 1920 1569" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M637 151.813C302.885 -22.0868 101.07 70.0256 0 151.813V1569H1920V151.813C1902.71 226.473 1846.83 246.353 1712 216C1577.17 185.647 1398.5 -56 1202.87 13.3517C980.677 92.1182 867.718 271.896 637 151.813Z" fill="#303030">
+            <animate attributeName="d"
+            values="
+            M637 151.813C302.885 -22.0868 101.07 70.0256 0 151.813V1569H1920V151.813C1902.71 226.473 1846.83 246.353 1712 216C1577.17 185.647 1398.5 -56 1202.87 13.3517C980.677 92.1182 867.718 271.896 637 151.813Z;
+            M508.5 176.684C358.967 25.0854 101.07 -50.7638 0 37.6136V1569H1920V176.684C1902.71 257.361 1823.5 366.707 1703.5 309.045C1593.5 256.189 1596 15.0223 1176.5 104.947C956.302 152.149 803.5 475.759 508.5 176.684Z;
+            M573.5 39.7227C304 -94.875 101.07 149.429 0 226.884V1569H1920V226.884C1902.71 297.589 1807.51 508.587 1697 505.502C1558.86 501.645 1498.16 -50.2886 1319.5 181.404C974 629.473 820.718 163.192 573.5 39.7227Z;
+            M637 151.813C302.885 -22.0868 101.07 70.0256 0 151.813V1569H1920V151.813C1902.71 226.473 1846.83 246.353 1712 216C1577.17 185.647 1398.5 -56 1202.87 13.3517C980.677 92.1182 867.718 271.896 637 151.813Z;
+            "
+            dur="40s"
+            repeatCount="indefinite"/>
+        </path>
+    </svg>
+
+    <script src="/effects"></script>
+    <script src="/ui-handlers"></script>
+    <script src="/server-handlers"></script>
+</body>
+</html>
